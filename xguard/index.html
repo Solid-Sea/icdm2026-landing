@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>R1-DualSup · 轻量安全护栏 — ICDM 2026 S30275</title>
+<meta name="description" content="一个 3B 的护栏：改写、换语种、加变体的攻击下仍拦 94.1%，落地产物只有 38.3M 参数。">
+<style>
+  :root{
+    --bg:#FFFFFF; --band:#F4F7F9; --ink:#1A1A1A; --ink-2:#333333;
+    --muted:#5A6672; --rule:#C9D2D9; --ieee:#00629B; --ieee-soft:#EAF2F7;
+    --serif:"Times New Roman","Nimbus Roman No9 L","Liberation Serif","Songti SC","Noto Serif CJK SC",Georgia,serif;
+    --sans:"Helvetica Neue",Arial,"PingFang SC","Noto Sans CJK SC",sans-serif;
+  }
+  *{box-sizing:border-box}
+  [data-lang="en"] .zh{display:none}
+  [data-lang="zh"] .en{display:none}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);
+       font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+
+  .strip{background:var(--ieee);color:#fff;font-family:var(--sans);
+         font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:9px 0}
+  .strip .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .strip b{font-weight:600}
+  .langsw{font-family:var(--sans);font-size:11px;letter-spacing:.06em;background:transparent;
+          border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:2px;
+          padding:4px 9px;cursor:pointer;min-height:26px}
+  .langsw:hover{background:rgba(255,255,255,.14)}
+
+  /* hero */
+  .hero{padding:52px 0 34px}
+  .kicker{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+          color:var(--ieee);margin-bottom:18px}
+  h1{font-size:clamp(30px,6.8vw,44px);line-height:1.18;margin:0 0 18px;font-weight:700;letter-spacing:-.012em}
+  .lede{font-size:clamp(17px,4.2vw,19px);color:var(--ink-2);margin:0 0 22px;max-width:32em;text-wrap:pretty}
+  .lede b{color:var(--ink)}
+  .authors{margin:20px 0 18px;font-size:14.5px;line-height:1.75;color:var(--muted)}
+  .authors .a{margin:0;text-align:left}
+  .authors b{color:var(--ink);font-weight:700}
+  .authors .sep{color:var(--rule);margin:0 6px}
+  .status{display:inline-block;font-family:var(--sans);font-size:12px;letter-spacing:.03em;
+          color:var(--ieee);background:var(--ieee-soft);border-radius:2px;padding:6px 11px}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+         border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:0 0 6px}
+  .stats div{padding:18px 16px 16px;border-right:1px solid var(--rule)}
+  .stats div:last-child{border-right:0}
+  .stats .v{font-family:var(--sans);font-size:clamp(24px,6vw,31px);font-weight:700;
+            letter-spacing:-.02em;line-height:1;color:var(--ieee)}
+  .stats .v em{font-style:normal;font-size:.5em;color:var(--ink-2);font-weight:600;margin-left:1px}
+  .stats .k{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.42}
+
+  section{padding:40px 0;border-bottom:1px solid var(--rule)}
+  h2{font-size:clamp(21px,5vw,26px);line-height:1.3;font-weight:700;margin:0 0 16px;letter-spacing:-.008em}
+  h3{font-size:16.5px;font-weight:700;margin:26px 0 8px}
+  p{margin:0 0 14px;text-align:justify;color:var(--ink-2)}
+  b,strong{color:var(--ink)}
+  ul{margin:0 0 14px;padding-left:20px}
+  li{margin-bottom:10px;color:var(--ink-2);text-align:justify}
+  li b{color:var(--ink)}
+
+  figure{margin:22px 0 8px}
+  figure img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+  figcaption{font-size:13.5px;color:var(--muted);margin-top:9px;text-align:justify}
+
+  .tlabel{font-size:13.5px;color:var(--muted);margin:22px 0 7px}
+  table{width:100%;border-collapse:collapse;font-size:15px;
+        border-top:1.6px solid var(--ink);border-bottom:1.6px solid var(--ink)}
+  thead th{border-bottom:.9px solid var(--ink);font-weight:400;font-style:italic;
+           text-align:right;padding:7px 8px;font-size:14px}
+  thead th:first-child{text-align:left}
+  td{padding:7px 8px;text-align:right;font-variant-numeric:tabular-nums}
+  td:first-child{text-align:left;font-family:var(--sans);font-size:14px}
+  tr.mine td{font-weight:700;background:var(--ieee-soft)}
+  .tnote{font-size:13.5px;color:var(--muted);margin:9px 0 0}
+  .read{background:var(--band);border-left:3px solid var(--ieee);padding:14px 16px;
+        font-size:15px;color:var(--ink-2);margin:18px 0 0}
+
+  .uses{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:6px}
+  .uses h3{font-size:15.5px;margin:0 0 6px}
+  .uses p{font-size:14.8px;margin:0;text-align:left}
+
+  footer{padding:36px 0 56px}
+  .contact{font-size:16.5px;margin:0 0 8px}
+  a{color:var(--ieee);text-decoration:none;border-bottom:1px solid rgba(0,98,155,.35);word-break:break-all}
+  a:hover{border-bottom-color:var(--ieee)}
+  .meta{font-family:var(--sans);font-size:12.5px;color:var(--muted);line-height:1.9;
+        margin-top:18px;border-top:1px solid var(--rule);padding-top:14px}
+
+  @media(max-width:600px){
+    body{font-size:16.5px}
+    .stats{grid-template-columns:1fr}
+    .stats div{border-right:0;border-bottom:1px solid var(--rule);
+               padding:12px 2px;display:flex;align-items:baseline;gap:16px}
+    .stats div:last-child{border-bottom:0}
+    .stats .v{font-size:25px;min-width:104px}
+    .stats .k{margin-top:0;font-size:12.5px}
+    .uses{grid-template-columns:1fr;gap:16px}
+    .strip .wrap{flex-direction:column;align-items:flex-start;gap:8px}
+    table{font-size:14px}
+    td,th{padding:7px 5px}
+    thead th{font-size:12.5px}
+    td:first-child{font-size:13px}
+    .hero{padding-top:36px}
+  }
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <span><b>ICDM 2026</b> · IEEE Int'l Conf. on Data Mining · Teen Track · Paper S30275</span>
+    <button class="langsw" id="langsw" aria-label="Switch language">EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker"><span class="zh">轻量安全护栏</span><span class="en">Lightweight Safety Guardrail</span></div>
+    <h1>
+      <span class="zh">3B 的护栏，<br>挡住改写过的攻击提示</span>
+      <span class="en">A 3B Guardrail That Holds Under Rewritten Attacks</span>
+    </h1>
+    <p class="lede">
+      <span class="zh">攻击者不需要破解模型，改几个字就能绕过关键词过滤。<b>R1-DualSup</b> 是给大模型用的一道前置闸门：在改写、换语种、加变体的提示上仍然拦得住，而落地产物只有一个 <b>38.3M 参数</b>的适配器。</span>
+      <span class="en">An attacker does not need to break a model — rewording is enough to slip past keyword filters. <b>R1-DualSup</b> is a front gate for large models: it still holds on rewritten, cross-lingual and variant-augmented prompts, and the shipped artifact is a <b>38.3M-parameter</b> adapter.</span>
+    </p>
+    <div class="authors">
+      <p class="a"><b><span class="zh">沙硕</span><span class="en">Shuo Sha</span></b><span class="sep">|</span><span class="zh">大连市第二十三中学</span><span class="en">Dalian No.23 High School</span><span class="sep">|</span><a href="#" data-m="solidsea" data-d="outlook.com" class="mail">email</a></p>
+      <p class="a"><b><span class="zh">孙思祈</span><span class="en">Siqi Sun</span></b><span class="sep">|</span><span class="zh">大连育明高级中学</span><span class="en">Dalian Yuming Senior High School</span><span class="sep">|</span><span class="zh">邮箱见论文</span><span class="en">email in the paper</span></p>
+      <p class="a"><b><span class="zh">李金宇</span><span class="en">Jinyu Li</span></b><span class="sep">|</span><span class="zh">大连市第二十三中学</span><span class="en">Dalian No.23 High School</span><span class="sep">|</span><span class="zh">邮箱见论文</span><span class="en">email in the paper</span></p>
+    </div>
+    <div class="status"><span class="zh">研究原型 · 论文在审 · DOI 待 IEEE Xplore 发布</span><span class="en">Research prototype · paper under review · DOI pending on IEEE Xplore</span></div>
+  </header>
+
+  <div class="stats">
+    <div><div class="v">94.1<em>%</em></div><div class="k"><span class="zh">不安全召回<br>BeaverTails，n=3,021</span><span class="en">unsafe recall<br>BeaverTails, n=3,021</span></div></div>
+    <div><div class="v">97.9<em>%</em></div><div class="k"><span class="zh">英文风险提示拦截<br>固定风险子集</span><span class="en">English risk-prompt block rate<br>fixed risk-only subset</span></div></div>
+    <div><div class="v">38.3<em>M</em></div><div class="k"><span class="zh">适配器参数量<br>主干冻结，可分离分发</span><span class="en">adapter parameters<br>frozen backbone, shipped separately</span></div></div>
+  </div>
+
+  <section>
+    <h2><span class="zh">小模型当闸门，两头都为难</span><span class="en">A small model as a gate is stuck at both ends</span></h2>
+    <p>
+      <span class="zh">拦得狠，正常提问被误杀；放得松，攻击者改几个字就过去了。业界常见做法是给分类头配一个固定阈值一刀切——召回和误杀被焊死在一起，运营方没有调的空间。</span>
+      <span class="en">Block aggressively and ordinary requests get killed; block loosely and a reworded attack walks through. The usual answer is a classifier head with one fixed threshold, which welds recall and false-block together and leaves the operator nothing to tune.</span>
+    </p>
+    <p>
+      <span class="zh">更麻烦的是评测。只测原始提示会高估护栏——真实攻击是改写过的、跨语种的、带变体的。</span>
+      <span class="en">Evaluation makes it worse: testing only original prompts overstates a guardrail, because real attacks arrive rewritten, cross-lingual and augmented.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="zh">一个模型，两条路径，一个兜底</span><span class="en">One model, two routes, one fallback</span></h2>
+    <ul>
+      <li><span class="zh"><b>固定分类路径</b>：风险类型排成固定体系，模型直接排序打分。延迟低、行为可预测，是默认路径。</span>
+      <span class="en"><b>Fixed-taxonomy route</b>: risk types are laid out as a fixed set and ranked directly. Low latency, predictable behaviour, and the default.</span></li>
+      <li><span class="zh"><b>策略化路径</b>：输入带可解析的策略时，激活受限标签生成，模型只能在标签空间内作答。</span>
+      <span class="en"><b>Policy-conditioned route</b>: when the input carries a parseable policy, constrained label generation activates and the model answers only inside the label space.</span></li>
+      <li><span class="zh"><b>确定性兜底</b>：策略解析失败或生成越界，自动回落到固定路径。不会静默放过，也不会崩。</span>
+      <span class="en"><b>Deterministic fallback</b>: failed parsing or out-of-space generation falls back to the fixed route. Nothing passes silently, nothing crashes.</span></li>
+    </ul>
+    <figure>
+      <a href="fig1-1.png" target="_blank" rel="noopener"><img src="fig1-1.png" alt="R1-DualSup flow: frozen Qwen2.5-3B backbone with one LoRA adapter, branching into fixed-taxonomy ranking or policy-conditioned constrained generation, with deterministic fallback"></a>
+      <figcaption>
+        <span class="zh">主干冻结，只训练适配器头；两条路径共用同一权重，回退由解析结果决定，而不是概率阈值。</span>
+        <span class="en">The backbone stays frozen and only the adapter head is trained; both routes share the same weights, and the fallback is decided by parse outcome rather than a probability threshold.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="zh">同一批数据，和谁比、差在哪</span><span class="en">Same data, compared honestly</span></h2>
+    <p>
+      <span class="zh">下面是公开响应安全测试集 BeaverTails 的 3,021 行，同一口径、同一批数据。两个大模型参考线按各自官方接口适配了提示与解析器。</span>
+      <span class="en">The 3,021 rows below come from the public BeaverTails response-safety set, same protocol, same data. The two large-model reference lines were adapted to their own official interfaces for prompts and parsing.</span>
+    </p>
+    <p class="tlabel"><span class="zh">不安全召回 / 安全特异度（%）</span><span class="en">Unsafe recall / safe specificity (%)</span></p>
+    <table>
+      <thead><tr>
+        <th><span class="zh">方案</span><span class="en">Approach</span></th>
+        <th><span class="zh">不安全召回</span><span class="en">Unsafe recall</span></th>
+        <th><span class="zh">安全特异度</span><span class="en">Safe specificity</span></th>
+      </tr></thead>
+      <tbody>
+        <tr class="mine"><td>R1-DualSup <em>3B</em></td><td>94.1</td><td>44.6</td></tr>
+        <tr><td>R1-Router v3 <em>3B</em></td><td>95.3</td><td>42.5</td></tr>
+        <tr><td>Linear-V3 <em>TF-IDF</em></td><td>78.6</td><td>60.3</td></tr>
+        <tr><td>Llama Guard 4 <em>12B</em></td><td>55.6</td><td>96.2</td></tr>
+        <tr><td>GPT-OSS Safeguard <em>20B</em></td><td>72.2</td><td>90.5</td></tr>
+      </tbody>
+    </table>
+    <div class="read">
+      <span class="zh"><b>这张表要正着读，也要反着读。</b>3B 的 DualSup 把不安全召回做到 94.1%，高于 12B 的 Llama Guard 4（55.6%）和 20B 的 GPT-OSS（72.2%）；代价是安全特异度只有 44.6%——它更愿意错杀。这不是全面胜出，是<b>两条不同的工作曲线</b>：要「不漏放」选这里，要「不误杀」就该往右走。</span>
+      <span class="en"><b>Read this table in both directions.</b> The 3B DualSup reaches 94.1% unsafe recall, above the 12B Llama Guard 4 (55.6%) and the 20B GPT-OSS (72.2%), at 44.6% safe specificity — it prefers to over-block. This is not a clean win but <b>two different operating curves</b>: take this side to avoid false negatives, move right to avoid false positives.</span>
+    </div>
+    <p style="margin-top:18px">
+      <span class="zh">另外两个必须说清的取舍：<b>R1-Router v3 的三项拦截率都比 DualSup 高</b>（98.5 / 98.4 / 94.7 对 97.9 / 98.0 / 93.8），但它是双适配器，产物 76.6M 参数 / 292.5 MiB，是 DualSup 的两倍，部署更重，所以没采用。策略迁移上也一样：40 条迁移样本（含 20 个未出现在策略训练目标中的 ID）上 DualSup 是 77.5% 有效性、50.0% 精确匹配，Router v3 是 100%/100%——换来的是体积翻倍。这些是取舍，不是缺陷隐瞒。</span>
+      <span class="en">Two trade-offs are worth stating plainly. <b>R1-Router v3 scores higher on all three block rates</b> (98.5 / 98.4 / 94.7 versus 97.9 / 98.0 / 93.8), but it is a two-adapter variant at 76.6M parameters and 292.5 MiB — twice the artifact, heavier to serve — so it was not adopted. Policy transfer is the same story: on 40 transfer records, 20 of whose target IDs never appeared in policy training, DualSup reaches 77.5% validity and 50.0% exact match while Router v3 reaches 100%/100%, at twice the size. These are trade-offs, stated rather than hidden.</span>
+    </p>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:14px">
+      <span class="zh">表中拦截率（97.9 / 98.0 / 93.8）是固定风险子集上的 block rate，不是 S-Eval 官方榜分数。</span>
+      <span class="en">The block rates above (97.9 / 98.0 / 93.8) are measured on fixed risk-only subsets and are not official S-Eval leaderboard scores.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="zh">能用在哪儿</span><span class="en">Where it earns its place</span></h2>
+    <div class="uses">
+      <div>
+        <h3><span class="zh">对外服务的前置闸门</span><span class="en">Front gate for public services</span></h3>
+        <p><span class="zh">一层统一拦截，把风险判断和业务模型解耦，换模型不用重做安全层。</span><span class="en">One interception layer decouples risk decisions from the serving model; swapping models does not mean rebuilding safety.</span></p>
+      </div>
+      <div>
+        <h3><span class="zh">私有化与端侧</span><span class="en">On-premise and edge</span></h3>
+        <p><span class="zh">3B 主干单卡可服务，适配器独立分发与替换，不必重训主干。</span><span class="en">A 3B backbone serves on one GPU; adapters ship and swap independently, with no backbone retraining.</span></p>
+      </div>
+      <div>
+        <h3><span class="zh">上线前回归</span><span class="en">Pre-release regression</span></h3>
+        <p><span class="zh">同一批固定攻击样本，比对新旧版本的召回与误杀，看新版有没有退化。</span><span class="en">The same fixed attack set, diffing recall and false-block across versions to catch regressions.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="zh">现在到哪一步</span><span class="en">Where this stands</span></h2>
+    <p>
+      <span class="zh">这是一个已经实现并部署的系统，不是纸面方案：适配器 38.3M 参数 / 146.3 MiB，挂在冻结的 Qwen2.5-3B-Instruct 上（LoRA r=16, α=32）。论文已投 ICDM 2026 Teen Track，正在评审中。<b>正式收录进 IEEE Xplore 后，这里会补上 DOI 与全文链接</b>——本页只介绍系统与结果，不提供论文正文。</span>
+      <span class="en">This is implemented and deployed, not a proposal: a 38.3M-parameter / 146.3 MiB adapter on a frozen Qwen2.5-3B-Instruct backbone (LoRA r=16, α=32). The paper is under review at the ICDM 2026 Teen Track. <b>Once it is indexed on IEEE Xplore, the DOI and full-text link will be added here</b> — this page introduces the system and its results, not the paper text.</span>
+    </p>
+  </section>
+
+  <footer>
+    <h2><span class="zh">聊聊</span><span class="en">Get in touch</span></h2>
+    <div class="contact"><b><span class="zh">沙硕</span><span class="en">Shuo Sha</span></b> · <span class="zh">大连市第二十三中学 · 第一作者</span><span class="en">Dalian No.23 High School · first author</span></div>
+    <p style="font-size:14.5px;color:var(--muted);margin:6px 0 0"><span class="zh">合作者：孙思祈（大连育明高级中学）、李金宇（大连市第二十三中学），其邮箱见论文作者栏。</span><span class="en">Co-authors: Siqi Sun (Dalian Yuming Senior High School) and Jinyu Li (Dalian No.23 High School); their emails are listed in the paper itself.</span></p>
+    <div class="meta">
+      ICDM 2026 · IEEE International Conference on Data Mining · Teen Track<br>
+      Paper ID 2026362256
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement, btn = document.getElementById('langsw');
+  function apply(lang){
+    root.dataset.lang = lang;
+    root.lang = (lang === 'en') ? 'en' : 'zh-CN';
+    btn.textContent = (lang === 'en') ? '中文' : 'EN';
+    try{ localStorage.setItem('lang', lang); }catch(e){}
+  }
+  var qs = null;
+  try{ qs = new URLSearchParams(location.search).get('lang'); }catch(e){}
+  var saved = null;
+  try{ saved = localStorage.getItem('lang'); }catch(e){}
+  var initial = (qs === 'en' || qs === 'zh') ? qs
+    : (saved || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));
+  apply(initial);
+  btn.addEventListener('click', function(){
+    apply(root.dataset.lang === 'zh' ? 'en' : 'zh');
+  });
+  document.querySelectorAll('.mail').forEach(function(a){
+    var addr = a.dataset.m + '@' + a.dataset.d;
+    a.href = 'mailto:' + addr;
+    a.textContent = addr;
+  });
+})();
+</script>
+</body>
+</html>

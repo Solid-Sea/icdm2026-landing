@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ICDM 2026 Teen Track · Two Papers</title>
+<meta name="description" content="Landing pages for two ICDM 2026 Teen Track papers: a lightweight safety guardrail and a full-stack edge AI system.">
+<style>
+  :root{
+    --bg:#FFFFFF; --ink:#1A1A1A; --ink-2:#333333; --muted:#5A6672;
+    --rule:#C9D2D9; --ieee:#00629B; --ieee-soft:#EAF2F7;
+    --serif:"Times New Roman","Nimbus Roman No9 L","Liberation Serif","Songti SC","Noto Serif CJK SC",Georgia,serif;
+    --sans:"Helvetica Neue",Arial,"PingFang SC","Noto Sans CJK SC",sans-serif;
+  }
+  *{box-sizing:border-box}
+  [data-lang="en"] .zh{display:none}
+  [data-lang="zh"] .en{display:none}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);
+       font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  .strip{background:var(--ieee);color:#fff;font-family:var(--sans);font-size:11.5px;
+         letter-spacing:.1em;text-transform:uppercase;padding:9px 0}
+  .strip .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .strip b{font-weight:600}
+  .langsw{font-family:var(--sans);font-size:11px;letter-spacing:.06em;background:transparent;
+          border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:2px;
+          padding:4px 9px;cursor:pointer;min-height:26px}
+  .langsw:hover{background:rgba(255,255,255,.14)}
+  header{padding:52px 0 30px;border-bottom:2px solid var(--ink)}
+  .kicker{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+          color:var(--ieee);margin-bottom:16px}
+  h1{font-size:clamp(28px,6.4vw,40px);line-height:1.2;margin:0 0 12px;font-weight:700;letter-spacing:-.012em}
+  .lede{color:var(--ink-2);margin:0;max-width:34em}
+  .items{padding:8px 0 0}
+  a.card{display:block;text-decoration:none;color:inherit;padding:28px 0;
+         border-bottom:1px solid var(--rule)}
+  a.card:hover .t{color:var(--ieee)}
+  a.card:hover{border-bottom-color:var(--ieee)}
+  .pid{font-family:var(--sans);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+       color:var(--muted);margin-bottom:8px}
+  .t{font-size:clamp(20px,4.8vw,25px);font-weight:700;line-height:1.28;margin:0 0 8px;
+     letter-spacing:-.008em;transition:color .15s}
+  .d{font-size:15.5px;color:var(--ink-2);margin:0}
+  .nums{font-family:var(--sans);font-size:13.5px;color:var(--ieee);margin-top:10px;font-weight:600}
+  footer{padding:30px 0 56px;font-family:var(--sans);font-size:12.5px;color:var(--muted);line-height:1.9}
+  @media(max-width:600px){
+    header{padding-top:36px}
+    a.card{padding:22px 0}
+    .strip .wrap{flex-direction:column;align-items:flex-start;gap:8px}
+  }
+</style>
+</head>
+<body>
+<div class="strip">
+  <div class="wrap">
+    <span><b>ICDM 2026</b> · IEEE Int'l Conf. on Data Mining · Teen Track</span>
+    <button class="langsw" id="langsw" aria-label="Switch language">EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="kicker"><span class="zh">两篇论文 · 两个系统</span><span class="en">Two papers, two systems</span></div>
+    <h1><span class="zh">能部署的东西，才值得写下来</span><span class="en">Only what ships is worth writing down</span></h1>
+    <p class="lede">
+      <span class="zh">两个研究原型：一道给大模型用的安全闸门，一台跑在 5 瓦板子上的边缘 AI 整机。下面每页只讲系统与实测结果，不含论文正文。</span>
+      <span class="en">Two research prototypes: a safety gate for large models, and an edge AI device running on a 5-watt board. Each page covers the system and its measured results, not the paper text.</span>
+    </p>
+  </header>
+
+  <div class="items">
+    <a class="card" href="xguard/">
+      <div class="pid">Paper S30275 · <span class="zh">沙硕 · 孙思祈 · 李金宇</span><span class="en">Shuo Sha, Siqi Sun, Jinyu Li</span></div>
+      <div class="t"><span class="zh">3B 的护栏，挡住改写过的攻击提示</span><span class="en">A 3B Guardrail That Holds Under Rewritten Attacks</span></div>
+      <p class="d"><span class="zh">轻量安全护栏 R1-DualSup：一个模型两条路径一个兜底，改写／换语种／加变体都拦得住。</span><span class="en">Lightweight safety guardrail R1-DualSup: one model, two routes, one fallback — holding on rewritten, cross-lingual and variant-augmented prompts.</span></p>
+      <div class="nums">94.1% <span class="zh">不安全召回</span><span class="en">unsafe recall</span> · 38.3M <span class="zh">适配器参数</span><span class="en">adapter params</span></div>
+    </a>
+
+    <a class="card" href="zhiyue/">
+      <div class="pid">Paper S30276 · <span class="zh">孙思祈 · 沙硕</span><span class="en">Siqi Sun, Shuo Sha</span></div>
+      <div class="t"><span class="zh">一块 5 瓦的板子，跑六种离线 AI 能力</span><span class="en">Six Offline AI Functions on a 5-Watt Device</span></div>
+      <p class="d"><span class="zh">智阅 ZhiYue：人脸、表情、植物识别、OCR、语音识别与合成，全部板端完成。</span><span class="en">ZhiYue: face, expression and plant recognition, OCR, speech recognition and synthesis, all on board.</span></p>
+      <div class="nums">178 ms <span class="zh">语音识别</span><span class="en">ASR</span> · 9.6 ms <span class="zh">NPU 推理</span><span class="en">NPU inference</span> · 5.2 W <span class="zh">整机功耗</span><span class="en">board power</span></div>
+    </a>
+  </div>
+
+  <footer>
+    ICDM 2026 · IEEE International Conference on Data Mining · Teen Track<br>
+    <span class="zh">联系：沙硕 · solidsea@outlook.com</span><span class="en">Contact: Shuo Sha · solidsea@outlook.com</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement, btn = document.getElementById('langsw');
+  function apply(lang){
+    root.dataset.lang = lang;
+    root.lang = (lang === 'en') ? 'en' : 'zh-CN';
+    btn.textContent = (lang === 'en') ? '中文' : 'EN';
+    try{ localStorage.setItem('lang', lang); }catch(e){}
+  }
+  var qs = null;
+  try{ qs = new URLSearchParams(location.search).get('lang'); }catch(e){}
+  var saved = null;
+  try{ saved = localStorage.getItem('lang'); }catch(e){}
+  var initial = (qs === 'en' || qs === 'zh') ? qs
+    : (saved || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));
+  apply(initial);
+  btn.addEventListener('click', function(){ apply(root.dataset.lang === 'zh' ? 'en' : 'zh'); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>智阅 ZhiYue · 边缘全栈 AI 整机 — ICDM 2026 S30276</title>
+<meta name="description" content="一块 5 瓦的板子跑六种离线 AI 能力：语音识别 178 ms，推理延迟 9.6 ms，整机功耗 5.2 W。">
+<style>
+  :root{
+    --bg:#FFFFFF; --band:#F4F7F9; --ink:#1A1A1A; --ink-2:#333333;
+    --muted:#5A6672; --rule:#C9D2D9; --ieee:#00629B; --ieee-soft:#EAF2F7;
+    --serif:"Times New Roman","Nimbus Roman No9 L","Liberation Serif","Songti SC","Noto Serif CJK SC",Georgia,serif;
+    --sans:"Helvetica Neue",Arial,"PingFang SC","Noto Sans CJK SC",sans-serif;
+  }
+  *{box-sizing:border-box}
+  [data-lang="en"] .zh{display:none}
+  [data-lang="zh"] .en{display:none}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);
+       font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  .strip{background:var(--ieee);color:#fff;font-family:var(--sans);
+         font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:9px 0}
+  .strip .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .strip b{font-weight:600}
+  .langsw{font-family:var(--sans);font-size:11px;letter-spacing:.06em;background:transparent;
+          border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:2px;
+          padding:4px 9px;cursor:pointer;min-height:26px}
+  .langsw:hover{background:rgba(255,255,255,.14)}
+  .hero{padding:52px 0 34px}
+  .kicker{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+          color:var(--ieee);margin-bottom:18px}
+  h1{font-size:clamp(30px,6.8vw,44px);line-height:1.18;margin:0 0 18px;font-weight:700;letter-spacing:-.012em}
+  .lede{font-size:clamp(17px,4.2vw,19px);color:var(--ink-2);margin:0 0 22px;max-width:32em;text-wrap:pretty}
+  .lede b{color:var(--ink)}
+  .authors{margin:20px 0 18px;font-size:14.5px;line-height:1.75;color:var(--muted)}
+  .authors .a{margin:0;text-align:left}
+  .authors b{color:var(--ink);font-weight:700}
+  .authors .sep{color:var(--rule);margin:0 6px}
+  .status{display:inline-block;font-family:var(--sans);font-size:12px;letter-spacing:.03em;
+          color:var(--ieee);background:var(--ieee-soft);border-radius:2px;padding:6px 11px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+         border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:0 0 6px}
+  .stats div{padding:18px 16px 16px;border-right:1px solid var(--rule)}
+  .stats div:last-child{border-right:0}
+  .stats .v{font-family:var(--sans);font-size:clamp(24px,6vw,31px);font-weight:700;
+            letter-spacing:-.02em;line-height:1;color:var(--ieee)}
+  .stats .v em{font-style:normal;font-size:.5em;color:var(--ink-2);font-weight:600;margin-left:1px}
+  .stats .k{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.42}
+  section{padding:40px 0;border-bottom:1px solid var(--rule)}
+  h2{font-size:clamp(21px,5vw,26px);line-height:1.3;font-weight:700;margin:0 0 16px;letter-spacing:-.008em}
+  h3{font-size:16.5px;font-weight:700;margin:26px 0 8px}
+  p{margin:0 0 14px;text-align:justify;color:var(--ink-2)}
+  b,strong{color:var(--ink)}
+  ul{margin:0 0 14px;padding-left:20px}
+  li{margin-bottom:10px;color:var(--ink-2);text-align:justify}
+  li b{color:var(--ink)}
+  figure{margin:22px 0 8px}
+  figure img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+  figcaption{font-size:13.5px;color:var(--muted);margin-top:9px;text-align:justify}
+  .tlabel{font-size:13.5px;color:var(--muted);margin:22px 0 7px}
+  table{width:100%;border-collapse:collapse;font-size:15px;
+        border-top:1.6px solid var(--ink);border-bottom:1.6px solid var(--ink)}
+  thead th{border-bottom:.9px solid var(--ink);font-weight:400;font-style:italic;
+           text-align:right;padding:7px 8px;font-size:14px}
+  thead th:first-child{text-align:left}
+  td{padding:7px 8px;text-align:right;font-variant-numeric:tabular-nums}
+  td:first-child{text-align:left;font-family:var(--sans);font-size:14px}
+  tr.mine td{font-weight:700;background:var(--ieee-soft)}
+  .tnote{font-size:13.5px;color:var(--muted);margin:9px 0 0}
+  .read{background:var(--band);border-left:3px solid var(--ieee);padding:14px 16px;
+        font-size:15px;color:var(--ink-2);margin:18px 0 0}
+  .uses{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:6px}
+  .uses h3{font-size:15.5px;margin:0 0 6px}
+  .uses p{font-size:14.8px;margin:0;text-align:left}
+  footer{padding:36px 0 56px}
+  .contact{font-size:16.5px;margin:0 0 8px}
+  a{color:var(--ieee);text-decoration:none;border-bottom:1px solid rgba(0,98,155,.35);word-break:break-all}
+  a:hover{border-bottom-color:var(--ieee)}
+  .meta{font-family:var(--sans);font-size:12.5px;color:var(--muted);line-height:1.9;
+        margin-top:18px;border-top:1px solid var(--rule);padding-top:14px}
+  @media(max-width:600px){
+    body{font-size:16.5px}
+    .stats{grid-template-columns:1fr}
+    .stats div{border-right:0;border-bottom:1px solid var(--rule);
+               padding:12px 2px;display:flex;align-items:baseline;gap:16px}
+    .stats div:last-child{border-bottom:0}
+    .stats .v{font-size:25px;min-width:104px}
+    .stats .k{margin-top:0;font-size:12.5px}
+    .uses{grid-template-columns:1fr;gap:16px}
+    .strip .wrap{flex-direction:column;align-items:flex-start;gap:8px}
+    table{font-size:14px}
+    td,th{padding:7px 5px}
+    thead th{font-size:12.5px}
+    td:first-child{font-size:13px}
+    .hero{padding-top:36px}
+  }
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <span><b>ICDM 2026</b> · IEEE Int'l Conf. on Data Mining · Teen Track · Paper S30276</span>
+    <button class="langsw" id="langsw" aria-label="Switch language">EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker"><span class="zh">边缘全栈 AI · 已部署整机</span><span class="en">Full-Stack Edge AI · Deployed Device</span></div>
+    <h1>
+      <span class="zh">一块 5 瓦的板子，跑六种离线 AI 能力</span>
+      <span class="en">Six Offline AI Functions on a 5-Watt Device</span>
+    </h1>
+    <p class="lede">
+      <span class="zh"><b>智阅</b> 是一台能摸到的边缘 AI 整机：人脸、表情、植物识别、OCR、语音识别与合成全部本地运行。<b>语音识别 178 ms</b>，<b>推理功耗 5.2 W</b>，不联网、不上传一张照片。</span>
+      <span class="en"><b>ZhiYue</b> is a physical edge AI device: face, expression and plant recognition, OCR, speech recognition and synthesis all run locally. <b>178 ms ASR</b>, <b>5.2 W inference draw</b>, no network, no photo ever uploaded.</span>
+    </p>
+    <div class="authors">
+      <p class="a"><b><span class="zh">孙思祈</span><span class="en">Siqi Sun</span></b><span class="sep">|</span><span class="zh">大连育明高级中学</span><span class="en">Dalian Yuming Senior High School</span><span class="sep">|</span><span class="zh">邮箱见论文</span><span class="en">email in the paper</span></p>
+      <p class="a"><b><span class="zh">沙硕</span><span class="en">Shuo Sha</span></b><span class="sep">|</span><span class="zh">大连市第二十三中学</span><span class="en">Dalian No.23 High School</span><span class="sep">|</span><a href="#" data-m="solidsea" data-d="outlook.com" class="mail">email</a></p>
+    </div>
+    <div class="status"><span class="zh">研究原型 · 论文在审 · DOI 待 IEEE Xplore 发布</span><span class="en">Research prototype · paper under review · DOI pending on IEEE Xplore</span></div>
+  </header>
+
+  <div class="stats">
+    <div><div class="v">178<em>ms</em></div><div class="k"><span class="zh">语音识别延迟<br>Paraformer，板端实测</span><span class="en">ASR latency<br>Paraformer, on board</span></div></div>
+    <div><div class="v">9.6<em>ms</em></div><div class="k"><span class="zh">NPU 推理延迟<br>MobileNetV2 三分类</span><span class="en">NPU inference<br>MobileNetV2, 3-class</span></div></div>
+    <div><div class="v">5.2<em>W</em></div><div class="k"><span class="zh">整机供电功耗<br>非量化 NPU 路线</span><span class="en">whole-board power<br>unquantised NPU route</span></div></div>
+  </div>
+
+  <section>
+    <h2><span class="zh">板端部署卡住的从来不是训练</span><span class="en">Edge deployment never fails at training</span></h2>
+    <p>
+      <span class="zh">模型搬到板子上，卡点是那条又长又碎的迁移链：框架版本对不上、算子不支持、量化后精度掉了、NPU 跑起来反而更慢。很多项目停在「demo 在 PC 上通了」。</span>
+      <span class="en">Moving a model onto a board fails along a long, brittle migration chain: framework versions disagree, operators are unsupported, quantisation costs accuracy, and the NPU sometimes runs slower than the CPU. Most projects stop at "the demo works on a PC".</span>
+    </p>
+    <p>
+      <span class="zh">真部署还要同时回答三个互相打架的问题：<b>准确率够不够</b>、<b>延迟能不能接受</b>、<b>功耗撑不撑得住</b>。</span>
+      <span class="en">Real deployment must answer three competing questions at once: <b>is accuracy enough</b>, <b>is latency acceptable</b>, <b>does power hold</b>.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="zh">这是一台机器，不是一组脚本</span><span class="en">A machine, not a folder of scripts</span></h2>
+    <figure>
+      <a href="fig_board.png" target="_blank" rel="noopener"><img src="fig_board.png" alt="ZhiYue device: dual-screen unit whose left screen shows live NPU versus CPU latency, right screen the console with demo, challenge, extension and debug modes"></a>
+      <figcaption>
+        <span class="zh">整机为双屏结构：左屏实时显示各路线 NPU 与 CPU 的耗时对比，右屏是面向使用者的控制台（演示 / 挑战 / 扩展 / 调试）。</span>
+        <span class="en">The device is dual-screen: the left panel shows live per-route NPU versus CPU latency, the right is the end-user console (demo / challenge / extension / debug).</span>
+      </figcaption>
+    </figure>
+    <p>
+      <span class="zh">六个能力全部在板端完成，不依赖网络：<b>人脸识别</b>（YuNet 检测 + ArcFace 特征）、<b>表情分类</b>、<b>植物图像匹配</b>（MobileCLIP）、<b>OCR</b>、<b>语音识别</b>（Paraformer）、<b>语音合成</b>（Sherpa）。</span>
+      <span class="en">All six functions run on the board with no network dependency: <b>face recognition</b> (YuNet detection plus ArcFace features), <b>expression classification</b>, <b>plant-image matching</b> (MobileCLIP), <b>OCR</b>, <b>ASR</b> (Paraformer) and <b>TTS</b> (Sherpa).</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="zh">一条迁移链，一个运行时</span><span class="en">One migration chain, one runtime</span></h2>
+    <ul>
+      <li><span class="zh"><b>PC → ONNX → RKNN</b>：固定链路，每一步产物可复现，不靠逐模型手调。</span>
+      <span class="en"><b>PC → ONNX → RKNN</b>: a fixed chain with reproducible artifacts at each step, not hand-tuned per model.</span></li>
+      <li><span class="zh"><b>CPU 默认、NPU 备选</b>：不是「能上 NPU 就上」，每条路线都用实测量化收益之后才决定。</span>
+      <span class="en"><b>CPU default, NPU optional</b>: not "NPU wherever possible" but "NPU only where the measured gain holds".</span></li>
+      <li><span class="zh"><b>ModelRuntime 统一后端</b>：六个能力共用一套调用接口，换后端不改业务代码。</span>
+      <span class="en"><b>ModelRuntime as one backend</b>: six functions share a single call interface; swapping backends leaves application code untouched.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="zh">同一模型，三个数字一起变好</span><span class="en">One model, three numbers moving the right way</span></h2>
+    <p>
+      <span class="zh">配对评测：同一个 MobileNetV2 三分类模型，分别在 CPU 默认路线和非量化 NPU 路线上跑。</span>
+      <span class="en">Paired evaluation: the same 3-class MobileNetV2 model run on the CPU default route and on the unquantised NPU route.</span>
+    </p>
+    <p class="tlabel"><span class="zh">准确率 / 平均延迟 / 整机功耗</span><span class="en">Accuracy / mean latency / board power</span></p>
+    <table>
+      <thead><tr>
+        <th><span class="zh">路线</span><span class="en">Route</span></th>
+        <th><span class="zh">准确率</span><span class="en">Accuracy</span></th>
+        <th><span class="zh">平均延迟</span><span class="en">Latency</span></th>
+        <th><span class="zh">整机功耗</span><span class="en">Power</span></th>
+      </tr></thead>
+      <tbody>
+        <tr class="mine"><td><span class="zh">非量化 NPU</span><span class="en">Unquantised NPU</span></td><td>75.0%</td><td>9.6 ms</td><td>5.2–5.4 W</td></tr>
+        <tr><td><span class="zh">CPU 默认</span><span class="en">CPU default</span></td><td>72.2%</td><td>44.6 ms</td><td>8.2–8.3 W</td></tr>
+      </tbody>
+    </table>
+    <div class="read">
+      <span class="zh">延迟降到 <b>1/4.6</b>、功耗降约 <b>36%</b>，准确率还高了 <b>2.8 个百分点</b>——因为这条 NPU 路线不靠量化换速度。这是本页最值得看的一组数：通常「快」和「准」要二选一，这里没有。</span>
+      <span class="en">Latency drops <b>4.6×</b>, power falls about <b>36%</b>, and accuracy is <b>2.8 points higher</b> — because this NPU route does not buy speed with quantisation. It is the number worth reading twice: usually speed and accuracy trade against each other, and here they do not.</span>
+    </div>
+    <p class="tnote">
+      <span class="zh">功耗为直供电流快照，不是积分能耗。</span>
+      <span class="en">Power figures are direct-DC current snapshots, not integrated energy.</span>
+    </p>
+    <h3><span class="zh">其余板端测量</span><span class="en">Other on-board measurements</span></h3>
+    <ul>
+      <li><span class="zh"><b>植物匹配</b>：MobileCLIP 315 ms；120 张授权图像上精确物种 81.7%、下游任务 89.2%。</span>
+      <span class="en"><b>Plant matching</b>: MobileCLIP at 315 ms; 81.7% exact-species and 89.2% downstream accuracy on 120 licensed images.</span></li>
+      <li><span class="zh"><b>语音合成</b>：Sherpa 合成至 WAV 4909 ms（含写盘）。</span>
+      <span class="en"><b>TTS</b>: Sherpa synthesis to WAV at 4909 ms, including file write.</span></li>
+      <li><span class="zh"><b>人脸特征</b>：ArcFace 特征占用降至约 1/4。</span>
+      <span class="en"><b>Face features</b>: ArcFace footprint reduced to roughly one quarter.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="zh">能用在哪儿</span><span class="en">Where it earns its place</span></h2>
+    <div class="uses">
+      <div>
+        <h3><span class="zh">博物馆与展厅</span><span class="en">Museums and exhibitions</span></h3>
+        <p><span class="zh">网络不可靠、设备要连轴转一整天、识别与讲解要即时响应。</span><span class="en">Unreliable networks, all-day operation, instant recognition and narration.</span></p>
+      </div>
+      <div>
+        <h3><span class="zh">教室与研学</span><span class="en">Classrooms and field study</span></h3>
+        <p><span class="zh">多台设备同时离线运行，功耗与成本都可控。</span><span class="en">Many units offline at once, with bounded power and cost.</span></p>
+      </div>
+      <div>
+        <h3><span class="zh">隐私敏感现场</span><span class="en">Privacy-sensitive sites</span></h3>
+        <p><span class="zh">人脸与画面只在本地处理，一步都不出设备。</span><span class="en">Faces and frames processed locally; nothing leaves the device.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="zh">现在到哪一步</span><span class="en">Where this stands</span></h2>
+    <p>
+      <span class="zh">整机已经跑通并部署，上面所有数字都来自这块 RK3576 板子的实测，不是估算或论文引用值。论文已投 ICDM 2026 Teen Track，正在评审中。<b>正式收录进 IEEE Xplore 后，这里会补上 DOI 与全文链接</b>——本页只介绍系统与结果，不提供论文正文。</span>
+      <span class="en">The device is built and deployed, and every number above was measured on this RK3576 board rather than estimated or quoted. The paper is under review at the ICDM 2026 Teen Track. <b>Once it is indexed on IEEE Xplore, the DOI and full-text link will be added here</b> — this page introduces the system and its results, not the paper text.</span>
+    </p>
+  </section>
+
+  <footer>
+    <h2><span class="zh">聊聊</span><span class="en">Get in touch</span></h2>
+    <div class="contact"><b><span class="zh">沙硕</span><span class="en">Shuo Sha</span></b> · <a href="#" data-m="solidsea" data-d="outlook.com" class="mail">email</a></div>
+    <p style="font-size:14.5px;color:var(--muted);margin:6px 0 0"><span class="zh">合作者 · 大连市第二十三中学。第一作者孙思祈（大连育明高级中学），其邮箱见论文作者栏。</span><span class="en">Co-author, Dalian No.23 High School. First author Siqi Sun (Dalian Yuming Senior High School); her email is listed in the paper itself.</span></p>
+    <div class="meta">
+      ICDM 2026 · IEEE International Conference on Data Mining · Teen Track<br>
+      Paper ID 2026362260
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement, btn = document.getElementById('langsw');
+  function apply(lang){
+    root.dataset.lang = lang;
+    root.lang = (lang === 'en') ? 'en' : 'zh-CN';
+    btn.textContent = (lang === 'en') ? '中文' : 'EN';
+    try{ localStorage.setItem('lang', lang); }catch(e){}
+  }
+  var qs = null;
+  try{ qs = new URLSearchParams(location.search).get('lang'); }catch(e){}
+  var saved = null;
+  try{ saved = localStorage.getItem('lang'); }catch(e){}
+  var initial = (qs === 'en' || qs === 'zh') ? qs
+    : (saved || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));
+  apply(initial);
+  btn.addEventListener('click', function(){
+    apply(root.dataset.lang === 'zh' ? 'en' : 'zh');
+  });
+  document.querySelectorAll('.mail').forEach(function(a){
+    if(!a.dataset.m || !a.dataset.d) return;
+    var addr = a.dataset.m + '@' + a.dataset.d;
+    a.href = 'mailto:' + addr;
+    a.textContent = addr;
+  });
+})();
+</script>
+</body>
+</html>
