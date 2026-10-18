@@ -132,7 +132,7 @@
       <p class="a"><b><span class="zh">孙思祈</span><span class="en">Siqi Sun</span></b><span class="sep">|</span><span class="zh">大连育明高级中学</span><span class="en">Dalian Yuming Senior High School</span><span class="sep">|</span><span class="zh">邮箱见论文</span><span class="en">email in the paper</span></p>
       <p class="a"><b><span class="zh">李金宇</span><span class="en">Jinyu Li</span></b><span class="sep">|</span><span class="zh">大连市第二十三中学</span><span class="en">Dalian No.23 High School</span><span class="sep">|</span><span class="zh">邮箱见论文</span><span class="en">email in the paper</span></p>
     </div>
-    <div class="status"><span class="zh">研究原型 · 论文在审 · DOI 待 IEEE Xplore 发布</span><span class="en">Research prototype · paper under review · DOI pending on IEEE Xplore</span></div>
+    <div class="status"><span class="zh">已被 ICDM 2026 Teen Track 接收 · 待 IEEE Xplore 收录</span><span class="en">Accepted at ICDM 2026 Teen Track · forthcoming in IEEE Xplore</span></div>
   </header>
 
   <div class="stats">
@@ -166,8 +166,8 @@
     <figure>
       <a href="fig1-1.png" target="_blank" rel="noopener"><img src="fig1-1.png" alt="R1-DualSup flow: frozen Qwen2.5-3B backbone with one LoRA adapter, branching into fixed-taxonomy ranking or policy-conditioned constrained generation, with deterministic fallback"></a>
       <figcaption>
-        <span class="zh">主干冻结，只训练适配器头；两条路径共用同一权重，回退由解析结果决定，而不是概率阈值。</span>
-        <span class="en">The backbone stays frozen and only the adapter head is trained; both routes share the same weights, and the fallback is decided by parse outcome rather than a probability threshold.</span>
+        <span class="zh">主干冻结，只训练适配器头；两条路径共用同一权重，回退由解析结果决定，而不是概率阈值。<span style="display:block;margin-top:4px;font-size:12.5px">图源：本论文</span></span>
+        <span class="en">The backbone stays frozen and only the adapter head is trained; both routes share the same weights, and the fallback is decided by parse outcome rather than a probability threshold.<span style="display:block;margin-top:4px;font-size:12.5px">Source: this paper.</span></span>
       </figcaption>
     </figure>
   </section>
@@ -228,8 +228,8 @@
   <section>
     <h2><span class="zh">现在到哪一步</span><span class="en">Where this stands</span></h2>
     <p>
-      <span class="zh">这是一个已经实现并部署的系统，不是纸面方案：适配器 38.3M 参数 / 146.3 MiB，挂在冻结的 Qwen2.5-3B-Instruct 上（LoRA r=16, α=32）。论文已投 ICDM 2026 Teen Track，正在评审中。<b>正式收录进 IEEE Xplore 后，这里会补上 DOI 与全文链接</b>——本页只介绍系统与结果，不提供论文正文。</span>
-      <span class="en">This is implemented and deployed, not a proposal: a 38.3M-parameter / 146.3 MiB adapter on a frozen Qwen2.5-3B-Instruct backbone (LoRA r=16, α=32). The paper is under review at the ICDM 2026 Teen Track. <b>Once it is indexed on IEEE Xplore, the DOI and full-text link will be added here</b> — this page introduces the system and its results, not the paper text.</span>
+      <span class="zh">这是一个已经实现并部署的系统，不是纸面方案：适配器 38.3M 参数 / 146.3 MiB，挂在冻结的 Qwen2.5-3B-Instruct 上（LoRA r=16, α=32）。论文已被 ICDM 2026 Teen Track 接收，出版流程已完成，待收录进 IEEE Xplore。<b>正式收录进 IEEE Xplore 后，这里会补上 DOI 与全文链接</b>——本页只介绍系统与结果，不提供论文正文。</span>
+      <span class="en">This is implemented and deployed, not a proposal: a 38.3M-parameter / 146.3 MiB adapter on a frozen Qwen2.5-3B-Instruct backbone (LoRA r=16, α=32). The paper is accepted at the ICDM 2026 Teen Track and the publication process is complete; it is awaiting indexing in IEEE Xplore. <b>Once it is indexed on IEEE Xplore, the DOI and full-text link will be added here</b> — this page introduces the system and its results, not the paper text.</span>
     </p>
   </section>
 
