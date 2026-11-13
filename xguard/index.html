@@ -85,6 +85,10 @@
   .contact{font-size:16.5px;margin:0 0 8px}
   a{color:var(--ieee);text-decoration:none;border-bottom:1px solid rgba(0,98,155,.35);word-break:break-all}
   a:hover{border-bottom-color:var(--ieee)}
+  .cta{display:inline-flex;align-items:center;gap:8px;background:var(--ieee);color:#fff;
+       padding:13px 22px;border-radius:8px;border:0;font-weight:700;font-size:16px;margin:6px 0 4px;
+       transition:background .15s}
+  .cta:hover{background:#00507d;border-bottom:1px solid transparent;color:#fff}
   .meta{font-family:var(--sans);font-size:12.5px;color:var(--muted);line-height:1.9;
         margin-top:18px;border-top:1px solid var(--rule);padding-top:14px}
 
@@ -230,6 +234,21 @@
     <p>
       <span class="zh">这是一个已经实现并部署的系统，不是纸面方案：适配器 38.3M 参数 / 146.3 MiB，挂在冻结的 Qwen2.5-3B-Instruct 上（LoRA r=16, α=32）。论文已被 ICDM 2026 Teen Track 接收，出版流程已完成，待收录进 IEEE Xplore。<b>正式收录进 IEEE Xplore 后，这里会补上 DOI 与全文链接</b>——本页只介绍系统与结果，不提供论文正文。</span>
       <span class="en">This is implemented and deployed, not a proposal: a 38.3M-parameter / 146.3 MiB adapter on a frozen Qwen2.5-3B-Instruct backbone (LoRA r=16, α=32). The paper is accepted at the ICDM 2026 Teen Track and the publication process is complete; it is awaiting indexing in IEEE Xplore. <b>Once it is indexed on IEEE Xplore, the DOI and full-text link will be added here</b> — this page introduces the system and its results, not the paper text.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="zh">在线体验</span><span class="en">Try it live</span></h2>
+    <p>
+      <span class="zh">不想只看图表，可以直接自己试一次：打开的页面连着正在运行的 R1-DualSup（同一套冻结 Qwen2.5-3B + 适配器，跑在一张 GPU 上，不是录屏也不是脚本回放）。输入一条请求和一段模型回答，选 DualSup 看风险标签，选 Router 看动态策略下的判定路径。首次请求需要几秒加载权重，之后单条推理约 0.15 秒；多人同时点会按顺序排队。</span>
+      <span class="en">Prefer to check it yourself: the page below is wired to a live R1-DualSup instance — the same frozen Qwen2.5-3B plus adapter, running on a GPU, not a recording or a scripted replay. Type a request and a model answer, pick DualSup for the risk label or Router for the policy-conditioned path. The first request takes a few seconds to load weights; after that each inference is about 0.15 s. Concurrent visitors are queued in order.</span>
+    </p>
+    <a class="cta" href="https://s30275.solidsea.cn/" target="_blank" rel="noopener">
+      <span class="zh">打开在线体验台 →</span><span class="en">Open the live demo →</span>
+    </a>
+    <p style="font-size:13.5px;color:var(--muted);margin:10px 0 0">
+      <span class="zh">演示服务只做推理，不保存输入内容；服务为答辩期间临时开放。</span>
+      <span class="en">The demo only runs inference and does not store what you type; the endpoint is open for the duration of the conference.</span>
     </p>
   </section>
 
