@@ -89,6 +89,9 @@
        padding:13px 22px;border-radius:8px;border:0;font-weight:700;font-size:16px;margin:6px 0 4px;
        transition:background .15s}
   .cta:hover{background:#00507d;border-bottom:1px solid transparent;color:#fff}
+  .cta-off{background:#7b8794;cursor:default;pointer-events:none}
+  .offnote{border-left:3px solid var(--ieee);background:rgba(0,98,155,.06);
+           padding:10px 14px;font-size:14.5px;margin:0 0 16px}
   .meta{font-family:var(--sans);font-size:12.5px;color:var(--muted);line-height:1.9;
         margin-top:18px;border-top:1px solid var(--rule);padding-top:14px}
 
@@ -238,23 +241,27 @@
   </section>
 
   <section>
-    <h2><span class="zh">在线体验</span><span class="en">Try it live</span></h2>
-    <p>
-      <span class="zh">不想只看图表，可以直接自己试一次：打开的页面连着正在运行的 R1-DualSup（同一套冻结 Qwen2.5-3B + 适配器，跑在一张 GPU 上，不是录屏也不是脚本回放）。输入一条请求和一段模型回答，选 DualSup 看风险标签，选 Router 看动态策略下的判定路径。首次请求需要几秒加载权重，之后单条推理约 0.15 秒；多人同时点会按顺序排队。</span>
-      <span class="en">Prefer to check it yourself: the page below is wired to a live R1-DualSup instance — the same frozen Qwen2.5-3B plus adapter, running on a GPU, not a recording or a scripted replay. Type a request and a model answer, pick DualSup for the risk label or Router for the policy-conditioned path. The first request takes a few seconds to load weights; after that each inference is about 0.15 s. Concurrent visitors are queued in order.</span>
+    <h2><span class="zh">在线体验（已结束）</span><span class="en">Try it live (closed)</span></h2>
+    <p class="offnote">
+      <span class="zh"><b>当前不在演示期，体验台已关闭，无法访问。</b>演示服务于 2026-11-14 大会结束后下线，页面地址不再对外提供服务。</span>
+      <span class="en"><b>The demo is closed — it is not available outside the demo period.</b> The endpoint was taken offline after the conference on 14 Nov 2026 and no longer serves requests.</span>
     </p>
-    <a class="cta" href="https://s30275.solidsea.cn/" target="_blank" rel="noopener">
-      <span class="zh">打开在线体验台 →</span><span class="en">Open the live demo →</span>
-    </a>
+    <p>
+      <span class="zh">答辩期间曾开放一个可以直接试的页面：它连着真实运行的 R1-DualSup（同一套冻结 Qwen2.5-3B + 适配器，跑在一张 GPU 上，不是录屏也不是脚本回放）。输入一条请求和一段模型回答，选 DualSup 看风险标签，选 Router 看动态策略下的判定路径；首次请求要几秒加载权重，之后单条推理约 0.15 秒。该页面现已下线。</span>
+      <span class="en">During the conference a live page was open: it was wired to a running R1-DualSup instance — the same frozen Qwen2.5-3B plus adapter, on a GPU, not a recording or a scripted replay. You could type a request and an answer, pick DualSup for the risk label or Router for the policy-conditioned path; the first request took a few seconds to load weights, then about 0.15 s each. That page is now offline.</span>
+    </p>
+    <span class="cta cta-off">
+      <span class="zh">演示已结束 · 暂不可用</span><span class="en">Demo closed · unavailable</span>
+    </span>
     <p style="font-size:13.5px;color:var(--muted);margin:10px 0 0">
-      <span class="zh">演示服务只做推理，不保存输入内容；服务为答辩期间临时开放。</span>
-      <span class="en">The demo only runs inference and does not store what you type; the endpoint is open for the duration of the conference.</span>
+      <span class="zh">体验台已于 2026-11-14 关闭，地址不再对外开放；如需复现细节或索取材料，欢迎来信联系作者。演示服务只做推理，从未保存输入内容。</span>
+      <span class="en">The endpoint was taken offline on 14 Nov 2026 and is not publicly reachable; for reproduction details or materials, please email the author. The demo only ran inference and never stored what visitors typed.</span>
     </p>
   </section>
 
   <footer>
     <h2><span class="zh">聊聊</span><span class="en">Get in touch</span></h2>
-    <div class="contact"><b><span class="zh">沙硕</span><span class="en">Shuo Sha</span></b> · <span class="zh">大连市第二十三中学 · 第一作者</span><span class="en">Dalian No.23 High School · first author</span></div>
+    <div class="contact"><b><span class="zh">沙硕</span><span class="en">Shuo Sha</span></b> · <span class="zh">大连市第二十三中学 · 第一作者</span><span class="en">Dalian No.23 High School · first author</span><span class="sep">|</span><a href="#" data-m="solidsea" data-d="outlook.com" class="mail">email</a></div>
     <p style="font-size:14.5px;color:var(--muted);margin:6px 0 0"><span class="zh">合作者：孙思祈（大连育明高级中学）、李金宇（大连市第二十三中学），其邮箱见论文作者栏。</span><span class="en">Co-authors: Siqi Sun (Dalian Yuming Senior High School) and Jinyu Li (Dalian No.23 High School); their emails are listed in the paper itself.</span></p>
     <div class="meta">
       ICDM 2026 · IEEE International Conference on Data Mining · Teen Track<br>
